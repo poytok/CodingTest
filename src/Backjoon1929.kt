@@ -5,35 +5,21 @@ fun main() {
     val m = sc.nextInt()
     val n = sc.nextInt()
 
-    var nm = 0
+    val nArray = Array(n + 1) { it }
+    nArray[1] = 0
 
-    for (i in 1 until n) {
-        if (i * i <= n && (i + 1) * (i + 1) > n) {
-            nm = i + 1
-            break
+    // 에라토스테네스의 체 이용
+    for (i in 2 until nArray.size) {
+        if (nArray[i] == 0) continue
+
+        for (j in i * 2..n step i) {
+            nArray[j] = 0
         }
     }
 
-    var array = Array(1000001) { it }
-    array = array.map {
-        var a = 0
-        for (i in 2..nm) {
+    // 0이거나 m과 n 사이에 있는 수가 아니면 filter
+    nArray.filter { it != 0 && it >= m}.forEach {
+        println(it)
+    }
 
-            if (i >= m) {
-                if (i == nm) {
-                    a = it
-                } else if (it % 2 == 0) {
-                    a = 0
-                } else {
-                    a = 0
-                }
-            } else {
-                a = 0
-            }
-        }
-        a
-    }.toTypedArray()
-
-
-    println(array.filter { it in m..n && it != 0 }.toTypedArray().contentToString())
 }
